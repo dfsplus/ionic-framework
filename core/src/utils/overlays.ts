@@ -17,7 +17,7 @@ import type {
 } from '../interface';
 
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
-import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
+import { addEventListener, componentOnReady, focusElement, getElementRoot, raf, removeEventListener } from './helpers';
 
 let lastId = 0;
 
@@ -416,6 +416,9 @@ export const present = async (
   overlay.presented = true;
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
+
+  // Wait a few frames - testing Angular overlay fit-content issue
+  await new Promise<void>(resolve => raf(() => resolve()));
 
   const mode = getIonMode(overlay);
   // get the user's animation fn if one was provided
