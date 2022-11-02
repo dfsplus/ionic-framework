@@ -15,6 +15,6 @@ export default {
       sourcemap: true,
     },
   ],
-  external: (id) => !/^(\.|\/)/.test(id),
+  external: (id) => !/^(\.|\/|[a-zA-Z]:\\)/.test(id),
   plugins: [resolve(), sourcemaps()],
 };
